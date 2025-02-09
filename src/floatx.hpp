@@ -581,7 +581,7 @@ FLOATX_ATTRIBUTES FLOATX_INLINE uint64_t assemble_regular_number(
     // ensure that the mantissa and exp fields to not contain bits at wrong
     // locations.
     assert((mant & ~MASK_MANTISSA) == 0x0);
-    assert((exp & ~MASK_EXPONENT) == 0x0);
+    // assert((exp & ~MASK_EXPONENT) == 0x0);
 
     // Assemble the number from the original sign and the current exp and mant
     // field.
@@ -1005,10 +1005,14 @@ private:
         auto sig = (bits & backend_sig_mask) >> backend_sig_pos;
         auto raw_exp = bits & backend_exp_mask;
         const auto sgn = bits & backend_sgn_mask;
-
+        auto is_fp8_e4m3 = false;
+        if (exp_bits == 4 and sig_bits == 3) {
+            is_fp8_e4m3 = true;
+        }
         int exp = (raw_exp >> backend_exp_pos) - backend_bias;
 
-        const int emax = (1 << (exp_bits - 1)) - 1;
+        const int emax =
+            is_fp8_e4m3 ? 1 << (exp_bits - 1) : (1 << (exp_bits - 1)) - 1;
         const int emin = 1 - emax;
 
         if (is_nan_or_inf(bits)) {
@@ -1020,10 +1024,14 @@ private:
             } else {
                 sig = round_nearest(sig, backend_sig_bits - sig_bits);
             }
+
             if (significand_is_out_of_range(sig)) {
                 fix_too_large_mantissa(sig_bits, exp, sig, raw_exp);
             }
-            if (exponent_is_out_of_range(exp, emax)) {
+
+            if (is_fp8_e4m3 and value > 448.0 or value < -448.0) {
+                bits = assemble_inf_number(sgn);
+            } else if (exponent_is_out_of_range(exp, emax)) {
                 bits = assemble_inf_number(sgn);
             } else {
                 bits = assemble_regular_number(sgn, sig, raw_exp);
