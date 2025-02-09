@@ -51,7 +51,7 @@ TEST_P(MyTest, TestFormula)
     // ASSERT_EQ(recoverd_fx, expected); // does not work for NAN's.
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_manual_sampels, MyTest,
     testing::Values(
 
@@ -99,8 +99,7 @@ INSTANTIATE_TEST_CASE_P(
         // 0000000000000000000000000000000000000000000000000000000000000000
         ::testing::make_tuple(0x3e5999999999999a, 0x0000000000000000)));
 
-
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     // Cases showing failuers during a float - Half - float brute force test!
     TestWithParameters_manual_sampels_002, MyTest,
     testing::Values(
@@ -135,8 +134,7 @@ INSTANTIATE_TEST_CASE_P(
         // 1011111001110000000000000000000000000000000000000000000000000000
         ::testing::make_tuple(0xbe6005ec80000000, 0xbe70000000000000)));
 
-
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParametersC1, MyTest,
     testing::Values(
         // number:     	1.00000000000000000000e+00	0x3ff0000000000000
@@ -186,7 +184,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::make_tuple(0x3fbc71c71c71c71c, 0x3fbc700000000000)));
 
 // Brute force snippsets from extracted from softlow
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_BF_001, MyTest,
     testing::Values(
         // start: 0
@@ -243,7 +241,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::make_tuple(0x36f8000000000000, 0x0000000000000000),
         ::testing::make_tuple(0x36f8800000000000, 0x0000000000000000)));
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_BF_002, MyTest,
     testing::Values(
         // start: 97495757619
@@ -300,7 +298,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::make_tuple(0xbe66666c60000000, 0xbe70000000000000),
         ::testing::make_tuple(0xbe66666c80000000, 0xbe70000000000000)));
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_BF_003, MyTest,
     testing::Values(
         // start: 214318868070
@@ -357,7 +355,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::make_tuple(0xc4ccccd2c0000000, 0xfff0000000000000),
         ::testing::make_tuple(0xc4ccccd2e0000000, 0xfff0000000000000)));
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_BF_004, MyTest,
     testing::Values(
         // start: 429492434632
@@ -414,8 +412,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::make_tuple(0xffffcedf00000000, 0xffffcc0000000000),
         ::testing::make_tuple(0xffffcedf20000000, 0xffffcc0000000000)));
 
-
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestWithParameters_BF_005, MyTest,
     testing::Values(
         // start: 97495757619

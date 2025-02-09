@@ -118,23 +118,23 @@ TEST_P(CheckValidRepresentationOfFloatx4_8, regular)
 }
 
 // SUBSET TEST ON FLOATX TYPE HALF <5,10>
-INSTANTIATE_TEST_CASE_P(TestParams_full_subnormal_range,
-                        CheckValidRepresentationOfFloatx5_10,
-                        testing::Values(::testing::make_tuple(5, 10)));
+INSTANTIATE_TEST_SUITE_P(TestParams_full_subnormal_range,
+                         CheckValidRepresentationOfFloatx5_10,
+                         testing::Values(::testing::make_tuple(5, 10)));
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestParams_subset_subnormal_range, CheckValidRepresentationOfFloatx5_10,
     testing::Values(::testing::make_tuple(2, 3), ::testing::make_tuple(3, 4),
                     ::testing::make_tuple(4, 2), ::testing::make_tuple(4, 8),
                     ::testing::make_tuple(5, 8), ::testing::make_tuple(2, 10)));
 
 // SUBSET TEST ON FLOATX TYPE HALF <4,8>
-INSTANTIATE_TEST_CASE_P(TestParams_full_subnormal_range,
-                        CheckValidRepresentationOfFloatx4_8,
-                        testing::Values(::testing::make_tuple(4, 8)));
+INSTANTIATE_TEST_SUITE_P(TestParams_full_subnormal_range,
+                         CheckValidRepresentationOfFloatx4_8,
+                         testing::Values(::testing::make_tuple(4, 8)));
 
-INSTANTIATE_TEST_CASE_P(TestParams_subset_subnormal_range,
-                        CheckValidRepresentationOfFloatx4_8,
-                        testing::Values(::testing::make_tuple(2, 3),
-                                        ::testing::make_tuple(3, 8),
-                                        ::testing::make_tuple(4, 3)));
+INSTANTIATE_TEST_SUITE_P(TestParams_subset_subnormal_range,
+                         CheckValidRepresentationOfFloatx4_8,
+                         testing::Values(::testing::make_tuple(2, 3),
+                                         ::testing::make_tuple(3, 8),
+                                         ::testing::make_tuple(4, 3)));
