@@ -10,5 +10,3 @@ target_link_libraries(common_type PRIVATE floatx)
 add_executable(DemoNewton DemoNewton.cpp)
 target_link_libraries(DemoNewton PRIVATE floatx)
 
-add_executable(Dtype float8.cpp)
-target_link_libraries(Dtype PRIVATE floatx)

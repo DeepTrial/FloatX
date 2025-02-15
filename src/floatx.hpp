@@ -1005,14 +1005,15 @@ private:
         auto sig = (bits & backend_sig_mask) >> backend_sig_pos;
         auto raw_exp = bits & backend_exp_mask;
         const auto sgn = bits & backend_sgn_mask;
-        auto is_fp8_e4m3 = false;
-        if (exp_bits == 4 and sig_bits == 3) {
-            is_fp8_e4m3 = true;
-        }
+        // auto is_fp8_e4m3 = false;
+        // if (exp_bits == 4 and sig_bits == 3) {
+        //     is_fp8_e4m3 = true;
+        // }
         int exp = (raw_exp >> backend_exp_pos) - backend_bias;
 
-        const int emax =
-            is_fp8_e4m3 ? 1 << (exp_bits - 1) : (1 << (exp_bits - 1)) - 1;
+        // const int emax =
+        //     is_fp8_e4m3 ? 1 << (exp_bits - 1) : (1 << (exp_bits - 1)) - 1;
+        const int emax = (1 << (exp_bits - 1)) - 1;
         const int emin = 1 - emax;
 
         if (is_nan_or_inf(bits)) {
@@ -1029,9 +1030,10 @@ private:
                 fix_too_large_mantissa(sig_bits, exp, sig, raw_exp);
             }
 
-            if (is_fp8_e4m3 and value > 448.0 or value < -448.0) {
-                bits = assemble_inf_number(sgn);
-            } else if (exponent_is_out_of_range(exp, emax)) {
+            // if (is_fp8_e4m3 and value > 448.0 or value < -448.0) {
+            //     bits = assemble_inf_number(sgn);
+            // } else
+            if (exponent_is_out_of_range(exp, emax)) {
                 bits = assemble_inf_number(sgn);
             } else {
                 bits = assemble_regular_number(sgn, sig, raw_exp);
@@ -1099,6 +1101,27 @@ FLOATX_ATTRIBUTES FLOATX_INLINE std::string bitstring(const Float& x) noexcept
 
 
 };  // namespace flx
+
+
+namespace FLOAT_DTYPE {
+// 64bit float, same as C/C++ double
+using float64 = flx::floatx<11, 52>;
+
+// 32bit float, same as C/C++ float
+using float32 = flx::floatx<8, 23>;
+
+// 16bit float
+using float16 = flx::floatx<5, 10>;
+using bfloat16 = flx::floatx<8, 7>;
+
+// 8bit float
+using float8_e4m3 = flx::floatx<4, 3>;
+using float8_e5m2 = flx::floatx<5, 2>;
+
+// using float8_e4m3fn = flx::floatx<4, 3>;
+// using float8_e4m3fnuz = flx::floatx<4, 3>;
+
+};  // namespace FLOAT_DTYPE
 
 
 #undef FLOATX_ATTRIBUTES
